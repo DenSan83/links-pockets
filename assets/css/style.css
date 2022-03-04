@@ -1,0 +1,9 @@
+.header {
+    padding: 1.5rem;
+    margin: 10px 0 20px 0;
+    border-radius: 0.25rem;
+    border: 1px solid #dee2e6;
+}
+.breadcrumb-item {
+    line-height: 34px;
+}
