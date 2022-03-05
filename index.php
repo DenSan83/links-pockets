@@ -1,7 +1,11 @@
 <?php
+//session_start();
 
-require_once './app/view/view.php';
+include_once('config.php');
+MyAutoload::start();
 
-$view = new View();
+if(!isset($_GET['r'])) $_GET['r'] = 'home';
+$request = $_GET['r']; // index.php?r=...
 
-$view->load('layout');
+$router = new Router($request);
+$router->getController();

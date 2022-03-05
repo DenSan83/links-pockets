@@ -1,5 +1,5 @@
 <?php
-include_once 'vendor/autoload.php';
+include_once './vendor/autoload.php';
 
 class View {
     private object $twig;
@@ -15,17 +15,19 @@ class View {
         return $this->twig;
     }
 
-    public function load($page,$params = []): void
+    public function load($page, $params = []): void
     {
-        $file = "app/view/$page.tpl";
+        $file = "./app/view/$page.tpl";
         if(file_exists($file)){
             try {
-                echo $this->twig->render("$page.tpl",$params);
+                echo $this->twig->render("$page.tpl", $params);
             } catch (Exception $e) {
-                file_put_contents('error_log.log', $e->getMessage(), FILE_APPEND);
+                include_once './app/model/model.php';
+                $model = new Model();
+                $model->errorLog($e);
             }
         } else {
-            echo 'not found';
+            echo '404: not found';
         }
     }
 }
