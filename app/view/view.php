@@ -18,6 +18,10 @@ class View {
     public function load($page, $params = []): void
     {
         $file = "./app/view/$page.tpl";
+        $params = array_merge($params, [
+            'session' => $_SESSION,
+            'HOST' => HOST
+        ]);
         if(file_exists($file)){
             try {
                 echo $this->twig->render("$page.tpl", $params);

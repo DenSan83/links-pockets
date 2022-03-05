@@ -37,6 +37,7 @@ class InstallModel extends Model
                     org TEXT NOT NULL,
                     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
                     FOREIGN KEY (user_id) REFERENCES users(id)
+                    ON DELETE CASCADE
                 ) ENGINE = InnoDB;
             ');
 

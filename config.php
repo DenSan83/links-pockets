@@ -11,23 +11,21 @@ class MyAutoload
         spl_autoload_register([__CLASS__, 'autoload']);
 
         $root = $_SERVER['DOCUMENT_ROOT'];
-        $host = $_SERVER['HTTP_HOST'];
+        $host = 'https://' . $_SERVER['HTTP_HOST'];
 
         /////// LOCALHOST ////////
         $localFolder = '/mylocals/06.Links_pockets';
         $root = $root . $localFolder;
-        $host = $host . $localFolder;
+        $host = 'http://' . $_SERVER['HTTP_HOST'] . $localFolder;
         //////////////////////////
 
-        define('HOST','https://'.$host.'/');
-        define('ROOT',$root.'/');
-        define('HOME',$root.'/');
+        define('HOST',$host);
+        define('ROOT',$root);
 
-        define('MODEL',ROOT.'app/model/');
-        define('CONTROLLER',ROOT.'app/controller/');
-        define('VIEW',ROOT.'app/view/');
-        define('ENTITY',ROOT.'app/entity/');
-
+        define('MODEL',ROOT.'/app/model/');
+        define('CONTROLLER',ROOT.'/app/controller/');
+        define('VIEW',ROOT.'/app/view/');
+        define('ENTITY',ROOT.'/app/entity/');
 
     }
 

@@ -42,7 +42,7 @@
                 <div>
                     <form method="post">
                         <p><b>Host: </b> {{ pdo.host }}</p>
-                        <input type="hidden" name="confirm[host]" value="{{ pdo.host }}">
+                        <input type="hidden" name="confirm[host]" value="{{ pdo.host }}" autofocus>
                         <p><b>Name: </b> {{ pdo.name }}</p>
                         <input type="hidden" name="confirm[name]" value="{{ pdo.name }}">
                         <p><b>User: </b> {{ pdo.user }}</p>

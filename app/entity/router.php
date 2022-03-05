@@ -8,6 +8,18 @@ class Router
             'home' => [
                 'controller' => 'Controller',
                 'method' => 'init'
+            ],
+            'new-user' => [
+                'controller' => 'UserController',
+                'method' => 'createUser'
+            ],
+            'login' => [
+                'controller' => 'UserController',
+                'method' => 'loginPage'
+            ],
+            'logout' => [
+                'controller' => 'UserController',
+                'method' => 'logout'
             ]
         ];
 
@@ -24,7 +36,17 @@ class Router
 
     public function getParams(): array
     {
-        return [];
+        // extract $_GET params :
+        $params = explode('/',$this->request);
+        unset($params[0]);
+
+        // extract $_POST params :
+        if($_POST) {
+            foreach($_POST as $key => $val) {
+                $params[$key] = $val;
+            }
+        }
+        return $params;
     }
 
     public function getController(): void

@@ -4,9 +4,16 @@ class Controller {
 
     public function init()
     {
+        // Route '/'
         if (!file_exists('PDO_info.php')) {
             $this->install();
             exit;
+        }
+        if ((new UserController())->countUsers() === 0) {
+            $this->redirect('/new-user');
+        }
+        if (!isset($_SESSION['user_data'])) {
+            $this->redirect('/login');
         }
         $model = new Model();
         $model->db();
@@ -47,7 +54,7 @@ class Controller {
 
     public function redirect($route = null): void
     {
-        header("Location: /$route");
+        header('Location: ' . HOST . $route);
         exit();
     }
 }
