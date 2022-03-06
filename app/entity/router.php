@@ -13,6 +13,10 @@ class Router
                 'controller' => 'UserController',
                 'method' => 'createUser'
             ],
+            'folder' => [
+                'controller' => 'FolderController',
+                'method' => 'init'
+            ],
             'login' => [
                 'controller' => 'UserController',
                 'method' => 'loginPage'

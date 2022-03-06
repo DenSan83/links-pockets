@@ -2,7 +2,7 @@
 
 class Controller {
 
-    public function init()
+    public function init($data)
     {
         // Route '/'
         if (!file_exists('PDO_info.php')) {
@@ -15,10 +15,9 @@ class Controller {
         if (!isset($_SESSION['user_data'])) {
             $this->redirect('/login');
         }
-        $model = new Model();
-        $model->db();
-        $view = new View();
-        $view->load('layout');
+
+        $folderController = new FolderController();
+        $folderController->init($data);
     }
 
     public function install()
