@@ -43,6 +43,7 @@
     border-radius: 6px;
     border: 0;
     overflow: hidden;
+    justify-content: space-between;
 }
 .pocket h6 {
     text-overflow: ellipsis;
@@ -50,24 +51,31 @@
     white-space: nowrap;
 }
 .pocket .options-container {
-    height: calc(100% - 40px);
-    position: absolute;
+    position: relative;
     overflow: hidden;
-    top: 0;
+    height: 100%;
+}
+.pocket img {
+    min-height: 100%;
+    object-fit: cover;
+    aspect-ratio: 16 / 9;
 }
 .pocket .options-layer {
     background-color: rgba(0, 0, 255, 0.6);
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
     height: 100%;
-    transform: translateY(101%);
     transition: transform 0.25s ease;
+    transform: translateY(101%);
 }
 .pocket .options-layer.show {
-    transform: translateY(0px);
+    transform: translateY(0);
 }
 
 .pocket .description {
     overflow-y: auto;
-    max-height: calc(100% - 2px);
 }
 .pocket .buttons span {
     cursor: pointer;
@@ -76,7 +84,7 @@
 .pocket .options {
     cursor: pointer;
     text-decoration: none;
-    z-index: 2;
+    /*z-index: 2;*/
 }
 
 /* Actions menu */

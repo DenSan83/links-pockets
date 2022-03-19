@@ -51,11 +51,11 @@
             </div>
 
             <div id="main">
-                <pre>
+{#                <pre>#}
 
-                {{ dump(content) }}
-                </pre>
-                {% for i in 1..3 %}
+{#                {{ dump(content) }}#}
+{#                </pre>#}
+                {% for link in content %}
                     {% include 'link.tpl' %}
                 {% endfor %}
             </div>
@@ -81,7 +81,7 @@
             </div>
         </div>
 
-
+        {% include 'modals.tpl' %}
 
 
 

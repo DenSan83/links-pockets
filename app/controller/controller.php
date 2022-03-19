@@ -17,7 +17,7 @@ class Controller {
         }
 
         $folderController = new FolderController();
-        $folderController->init($data);
+        $folderController->fetch($data);
     }
 
     public function install()

@@ -17,6 +17,18 @@ class Router
                 'controller' => 'FolderController',
                 'method' => 'init'
             ],
+            'create' => [
+                'controller' => 'FolderController',
+                'method' => 'create'
+            ],
+            'edit' => [
+                'controller' => 'FolderController',
+                'method' => 'edit'
+            ],
+            'delete' => [
+                'controller' => 'FolderController',
+                'method' => 'delete'
+            ],
             'login' => [
                 'controller' => 'UserController',
                 'method' => 'loginPage'
