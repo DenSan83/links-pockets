@@ -60,6 +60,9 @@
     object-fit: cover;
     aspect-ratio: 16 / 9;
 }
+.pocket img.folder {
+    object-fit: contain;
+}
 .pocket .options-layer {
     background-color: rgba(0, 0, 255, 0.6);
     position: absolute;
@@ -84,7 +87,6 @@
 .pocket .options {
     cursor: pointer;
     text-decoration: none;
-    /*z-index: 2;*/
 }
 
 /* Actions menu */

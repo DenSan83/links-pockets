@@ -18,7 +18,7 @@ class FolderController extends Controller
         $folderList = $linkList = [];
         foreach ($allLinks as $link) {
             // Forbidden chars: #, *, ?, &
-            if ($link['org'] === implode('/', $_SESSION['breadcrumb']) . '#'){
+            if ($link['org'] === implode('/', $_SESSION['breadcrumb']) . '/#'){
                 $folderList[] = $link;
             } else if ($link['org'] === implode('/', $_SESSION['breadcrumb'])) {
                 $linkList[] = $link;
@@ -34,19 +34,32 @@ class FolderController extends Controller
     public function create($data): void
     {
         // Ajax call on '/create'
-        if (!isset($data['newLink'])) {
+        if (!isset($data['newLink']) && !isset($data['newFolder'])) {
             $result['errors'] = 'A problem occurred while fetching the form';
             exit(json_encode($result));
         }
 
-        // Add image if not given (ratio 16:9)
-        if ($data['newLink']['img'] === '') {
-            $data['newLink']['img'] = 'https://s0.wordpress.com/mshots/v1/'.urlencode($data['newLink']['url']).'?w=320&h=180';
+        // Complete newLink data (Add image if not given) (ratio 16:9)
+        if (isset($data['newLink'])) {
+            if ($data['newLink']['img'] === '') {
+                $data['newLink']['img'] = 'https://s0.wordpress.com/mshots/v1/' . urlencode($data['newLink']['url']) . '?w=320&h=180';
+            }
+            $fullData = $data['newLink'];
+        }
+        // Complete newFolder data
+        if (isset($data['newFolder'])) {
+            $data['newFolder']['url'] = '/folder/' . implode('/', $_SESSION['breadcrumb']) . '/' . $data['newFolder']['title'];
+            $data['newFolder']['img'] = 'assets/images/folder.png';
+            $data['newFolder']['org'] = implode('/', $_SESSION['breadcrumb']) . '/#';
+            $fullData = $data['newFolder'];
         }
 
         // Insert data in table
+        if (!isset($fullData)) {
+            exit(json_encode(['errors' => 'Form not found']));
+        }
         $folderModel = new FolderModel();
-        $result = $folderModel->create($data['newLink']);
+        $result = $folderModel->create($fullData);
 
         if ($result) {
             $content['success'] = true;

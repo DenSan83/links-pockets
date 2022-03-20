@@ -1,8 +1,14 @@
 <div class="pocket card col-auto m-2">
     <div id="pocket_{{ link.id }}" class="options-container w-100">
-        <a href="{{ link.url }}" class="d-block" target="_blank">
-            <img src="{{ link.img }}" class="card-img-top" alt="{{ link.title }}">
-        </a>
+        {% if link.org|last == '#' %} {# This is a folder behavior #}
+            <a href="{{ HOST ~ '/' ~ link.url }}" class="d-block">
+                <img src="{{ HOST ~ '/' ~ link.img }}" class="card-img-top folder" alt="{{ link.title }}">
+            </a>
+        {% else %} {# This is a link behavior #}
+            <a href="{{ link.url }}" class="d-block" target="_blank">
+                <img src="{{ link.img }}" class="card-img-top" alt="{{ link.title }}">
+            </a>
+        {% endif %}
         <div class="options-layer">
 
             {# Buttons responsive #}
