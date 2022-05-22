@@ -23,9 +23,7 @@ class InstallController extends Controller
                 file_put_contents('PDO_info.php', serialize($data));
 
                 // Create tables
-                require_once 'installController.php';
-                $installController = new InstallController();
-                if (!$installController->createTables()) return;
+                if (!$this->createTables()) return;
 
                 $this->redirect();
             }
@@ -33,7 +31,7 @@ class InstallController extends Controller
         $view = new View();
         $view->load('install', $settings);
     }
-    
+
     public function createTables(): bool
     {
         $allCreated = true;
