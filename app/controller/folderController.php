@@ -38,6 +38,10 @@ class FolderController extends Controller
             $result['errors'] = 'A problem occurred while fetching the form';
             exit(json_encode($result));
         }
+        if (!isset($_SESSION['user_data']) || !$_SESSION['user_data'] instanceof User) {
+            $result['errors'] = 'User is not connected';
+            exit(json_encode($result));
+        }
 
         // Complete newLink data (Add image if not given) (ratio 16:9)
         if (isset($data['newLink'])) {
@@ -69,6 +73,39 @@ class FolderController extends Controller
         exit(json_encode($content));
     }
 
+    public function findId($data): void
+    {
+        // Ajax call on '/find-id'
+        if (!isset($data['id'])) {
+            $return['errors'] = 'Data not found';
+            exit(json_encode($return));
+        }
+        if (!isset($_SESSION['user_data']) || !$_SESSION['user_data'] instanceof User) {
+            $return['errors'] = 'User is not connected';
+            exit(json_encode($return));
+        }
+
+        $folderModel = new FolderModel();
+        $result = $folderModel->findOne($data['id']);
+
+        if (!$result) {
+            $return['errors'] = 'Data not found';
+            exit(json_encode($return));
+        }
+        // Verify ownership
+        if ($_SESSION['user_data']->getId() !== (int) $result['user_id']) {
+            $return['errors'] = 'Permission not allowed';
+            exit(json_encode($return));
+        }
+
+        $return = [
+            'success' => true,
+            'data' => $result
+        ];
+
+        exit(json_encode($return));
+    }
+
     public function edit($data): void
     {
         var_dump($data);
@@ -78,4 +115,5 @@ class FolderController extends Controller
     {
         var_dump($data);
     }
+
 }

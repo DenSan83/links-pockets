@@ -21,6 +21,10 @@ class Router
                 'controller' => 'FolderController',
                 'method' => 'create'
             ],
+            'find-id' => [
+                'controller' => 'FolderController',
+                'method' => 'findId'
+            ],
             'edit' => [
                 'controller' => 'FolderController',
                 'method' => 'edit'

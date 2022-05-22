@@ -33,4 +33,15 @@ class FolderModel extends Model
             return false;
         }
     }
+
+    public function findOne(int $id): ?array
+    {
+        $db = $this->db();
+        $req = $db->prepare('
+            SELECT * FROM links WHERE id = :id
+        ');
+        $req->bindValue(':id', $id);
+        $req->execute();
+        return $req->fetch(PDO::FETCH_ASSOC);
+    }
 }

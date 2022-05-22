@@ -29,6 +29,7 @@
                 </div>
             </div>
             <h1>Links pockets</h1>
+            <a id="home" href="{{ HOST }}"></a>
             <div class="header">
                 <div class="float-end">
                     <a href="#searchbar" class="btn btn-outline-secondary" data-bs-target="#searchbar" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="searchbar">

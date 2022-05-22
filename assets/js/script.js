@@ -36,6 +36,21 @@ $(() => {
     $("#newLink").on('shown.bs.modal', function(){
         $(this).find('input:first').focus();
     });
+    $('.edit').on('click', e => {
+        let id = $(e.currentTarget).parents('.options-layer').data('id');
+        let url = $('#home').attr('href') + '/find-id';
+        $.post( url, { id: id })
+        .done((response, result) => {
+            response = JSON.parse(response);
+            if (response.success) {
+                console.log(response.data);
+                // console.log(response.data.title)
+            } else {
+                // display errors
+            }
+        })
+    })
+    // Modify
 
     // Form validation
     let validator = new Validator();
@@ -45,12 +60,6 @@ $(() => {
     $('#sendNewFolder').on('click', () => {
         validator.validateNewFolder();
     })
-
-
-
-
-
-
 
 
 
