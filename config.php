@@ -25,7 +25,8 @@ class MyAutoload
         define('MODEL',ROOT.'/app/model/');
         define('CONTROLLER',ROOT.'/app/controller/');
         define('VIEW',ROOT.'/app/view/');
-        define('ENTITY',ROOT.'/app/entity/');
+        define('OBJ',ROOT.'/app/object/');
+        define('ROUTER',ROOT.'/app/router/');
 
     }
 
@@ -40,8 +41,11 @@ class MyAutoload
         else if (file_exists(VIEW . $class . '.php')) {
             require_once VIEW . $class . '.php';
         }
-        else if (file_exists(ENTITY . $class . '.php')) {
-            require_once ENTITY . $class . '.php';
+        else if (file_exists(OBJ . $class . '.php')) {
+            require_once OBJ . $class . '.php';
+        }
+        else if (file_exists(ROUTER . $class . '.php')) {
+            require_once ROUTER . $class . '.php';
         }
     }
 }
