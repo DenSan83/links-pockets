@@ -43,8 +43,14 @@ $(() => {
         .done((response, result) => {
             response = JSON.parse(response);
             if (response.success) {
-                console.log(response.data);
-                // console.log(response.data.title)
+                $('#editLink').modal('show');
+                
+                $('#editForm input[name="editLink[url]"]').val(response.data.url);
+                $('#editForm input[name="editLink[title]"]').val(response.data.title);
+                $('#editForm input[name="editLink[description]"]').val(response.data.description);
+                $('#editForm input[name="editLink[img]"]').val(response.data.img);
+                $('#editForm input[name="editLink[id]"]').val(response.data.id);
+                $('#editForm input[name="editLink[org]"]').val(response.data.org);
             } else {
                 // display errors
             }
@@ -55,7 +61,14 @@ $(() => {
     // Form validation
     let validator = new Validator();
     $('#sendNew').on('click', () => {
-        validator.validateNewLink();
+        validator.validateLink('#newForm');
+    })
+    $('#sendNewFolder').on('click', () => {
+        validator.validateNewFolder();
+    })
+
+    $('#sendEdit').on('click', () => {
+        validator.validateLink('#editForm');
     })
     $('#sendNewFolder').on('click', () => {
         validator.validateNewFolder();

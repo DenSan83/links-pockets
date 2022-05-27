@@ -102,13 +102,35 @@ class FolderController extends Controller
             'success' => true,
             'data' => $result
         ];
-
         exit(json_encode($return));
     }
 
-    public function edit($data): void
+    public function edit(array $data): void
     {
-        var_dump($data);
+        $folderModel = new FolderModel();
+
+        // Complete newLink data (Add image if not given) (ratio 16:9)
+        if (isset($data['editLink'])) {
+            if ($data['editLink']['img'] === '') {
+                $data['editLink']['img'] = 'https://s0.wordpress.com/mshots/v1/' . urlencode($data['editLink']['url']) . '?w=320&h=180';
+            }
+            // $fullData = $data['newLink'];
+        }
+
+        // Verify ownership
+        $linkData = $folderModel->findOne($data['editLink']['id']);
+        if (is_null($linkData) || $_SESSION['user_data']->getId() !== (int) $linkData['user_id']) {
+            $return['errors'] = 'Permission not allowed';
+            exit(json_encode($return));
+        }
+        $result = $folderModel->edit($data['editLink']);
+
+        $return = [
+            'success' => true,
+            'data' => $result
+        ];
+
+        exit(json_encode($return));
     }
 
     public function delete($data): void

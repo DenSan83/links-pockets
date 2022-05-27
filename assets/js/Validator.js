@@ -4,10 +4,10 @@ class Validator {
     requiredFieldError = 'This field is required';
     specialCharsError = 'Special characters are not allowed in this field';
 
-    validateNewLink() {
-        let linkInput = $('#newForm .link');
-        let titleInput = $('#newForm .title');
-        let feedBack = $('#newForm .title-feedback');
+    validateLink(formId) {
+        let linkInput = $(formId + ' .link');
+        let titleInput = $(formId + ' .title');
+        let feedBack = $(formId + ' .title-feedback');
         let linkIsValid = true;
         let titleIsValid = true;
         let error = null;
@@ -45,7 +45,7 @@ class Validator {
 
         // Send form via Ajax
         if (linkIsValid && titleIsValid) {
-            let form = $('#newForm')[0];
+            let form = $(formId)[0];
             let url = $(form).data('submitto');
             let data = new FormData(form);
             $.post({
@@ -56,18 +56,19 @@ class Validator {
             })
             .done((response, result) => {
                 if (result !== 'success') {
-                    $('#newForm + .form-text').html(this.genericError);
+                    $(formId + ' + .form-text').html(this.genericError);
                 }
 
+                console.log(response)
                 try {
                     response = JSON.parse(response);
                     if (response.success) {
                         location.reload();
                     } else {
-                        $('#newForm + .form-text').html(response.errors);
+                        $(formId + ' + .form-text').html(response.errors);
                     }
                 } catch (e) {
-                    $('#newForm + .form-text').html(this.genericError);
+                    $(formId + ' + .form-text').html(this.genericError);
                 }
             })
         }
