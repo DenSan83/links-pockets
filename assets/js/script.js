@@ -36,6 +36,8 @@ $(() => {
     $("#newLink").on('shown.bs.modal', function(){
         $(this).find('input:first').focus();
     });
+    
+    // Modify
     $('.edit').on('click', e => {
         let id = $(e.currentTarget).parents('.options-layer').data('id');
         let url = $('#home').attr('href') + '/find-id';
@@ -56,7 +58,6 @@ $(() => {
             }
         })
     })
-    // Modify
 
     // Form validation
     let validator = new Validator();
