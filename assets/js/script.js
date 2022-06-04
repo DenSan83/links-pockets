@@ -58,6 +58,25 @@ $(() => {
             }
         })
     })
+    $('.edit-folder').on('click', e => {
+        let id = $(e.currentTarget).parents('.options-layer').data('id');
+        let url = $('#home').attr('href') + '/find-id';
+        $.post( url, { id: id })
+        .done((response, result) => {
+            response = JSON.parse(response);
+            if (response.success) {
+                $('#editFolder').modal('show');
+
+                $('#editFolderForm input[name="editFolder[url]"]').val(response.data.url);
+                $('#editFolderForm input[name="editFolder[title]"]').val(response.data.title);
+                $('#editFolderForm input[name="editFolder[description]"]').val(response.data.description);
+                $('#editFolderForm input[name="editFolder[id]"]').val(response.data.id);
+                $('#editFolderForm input[name="editFolder[org]"]').val(response.data.org);
+            } else {
+                // display errors
+            }
+        })
+    })
 
     // Form validation
     let validator = new Validator();
@@ -65,14 +84,14 @@ $(() => {
         validator.validateLink('#newForm');
     })
     $('#sendNewFolder').on('click', () => {
-        validator.validateNewFolder();
+        validator.validateFolder('#newFolderForm');
     })
 
     $('#sendEdit').on('click', () => {
         validator.validateLink('#editForm');
     })
-    $('#sendNewFolder').on('click', () => {
-        validator.validateNewFolder();
+    $('#sendEditFolder').on('click', () => {
+        validator.validateFolder('#editFolderForm');
     })
 
 

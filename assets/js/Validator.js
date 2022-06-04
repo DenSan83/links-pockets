@@ -59,7 +59,6 @@ class Validator {
                     $(formId + ' + .form-text').html(this.genericError);
                 }
 
-                console.log(response)
                 try {
                     response = JSON.parse(response);
                     if (response.success) {
@@ -74,9 +73,9 @@ class Validator {
         }
     }
 
-    validateNewFolder() {
-        let titleInput = $('#newFolderForm .title');
-        let feedBack = $('#newFolderForm .title-feedback');
+    validateFolder(formId) {
+        let titleInput = $(formId + ' .title');
+        let feedBack = $(formId + ' .title-feedback');
         let titleIsValid = true;
         let error = null;
 
@@ -102,7 +101,7 @@ class Validator {
 
         // Send form via Ajax
         if (titleIsValid) {
-            let form = $('#newFolderForm')[0];
+            let form = $(formId)[0];
             let url = $(form).data('submitto');
             let data = new FormData(form);
             $.post({
@@ -113,7 +112,7 @@ class Validator {
             })
             .done((response, result) => {
                 if (result !== 'success') {
-                    $('#newFolderForm + .form-text').html(this.genericError);
+                    $(formId + ' + .form-text').html(this.genericError);
                 }
 
                 try {
@@ -121,10 +120,10 @@ class Validator {
                     if (response.success) {
                         location.reload();
                     } else {
-                        $('#newFolderForm + .form-text').html(response.errors);
+                        $(formId + ' + .form-text').html(response.errors);
                     }
                 } catch (e) {
-                    $('#newFolderForm + .form-text').html(this.genericError);
+                    $(formId + ' + .form-text').html(this.genericError);
                 }
             })
         }

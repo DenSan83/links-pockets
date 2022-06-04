@@ -93,11 +93,24 @@ class FolderController extends Controller
 
     public function edit(array $data): void
     {
-        // Screenshot check
+        // Link screenshot check
         if (isset($data['editLink'])) {
-            $data['editLink']['img'] = $this->addScreenshot($data['editLink']['img'], $data['newLink']['url']);
+            $data['editLink']['img'] = $this->addScreenshot($data['editLink']['img'], $data['editLink']['url']);
+            $fullData = $data['editLink'];
         }
-        $result = $this->getOneOfMine($data['editLink']['id']);
+        // Complete folder data
+        if (isset($data['editFolder'])) {
+            $data['editFolder']['img'] = 'assets/images/folder.png';
+            $fullData = $data['editFolder'];
+        }
+
+        if (!isset($fullData)) {
+            exit(json_encode(['errors' => 'Form not found']));
+        }
+
+        $this->getOneOfMine($fullData['id']);
+        $folderModel = new FolderModel();
+        $result = $folderModel->edit($fullData);
 
         $return = [
             'success' => true,
