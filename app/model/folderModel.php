@@ -60,4 +60,16 @@ class FolderModel extends Model
         $req->bindValue(':org', $data['org']);
         return $req->execute();
     }
+
+    public function delete(int $id)
+    {
+        $db = $this->db();
+        $req = $db->prepare('
+            DELETE FROM links 
+            WHERE id = :id
+        ');
+        $req->bindValue(':id', $id);
+
+        return $req->execute();
+    }
 }

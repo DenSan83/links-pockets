@@ -25,6 +25,7 @@ class View {
         if(file_exists($file)){
             try {
                 echo $this->twig->render("$page.tpl", $params);
+                $this->destroyNotifications();
             } catch (Exception $e) {
                 include_once './app/model/model.php';
                 $model = new Model();
@@ -33,5 +34,11 @@ class View {
         } else {
             echo '404: not found';
         }
+    }
+
+    private function destroyNotifications()
+    {
+        $notificationController = new notificationController();
+        $notificationController->destroyNotifications();
     }
 }

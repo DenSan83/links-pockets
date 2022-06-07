@@ -120,3 +120,8 @@
 #folder.open {
     transform: translate(-4em, -0.7em);
 }
+
+.alert.notification {
+    top: 0.5em;
+    right: 4em;
+}

@@ -4,6 +4,7 @@
         <!-- Required meta tags -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="icon" type="image/png" href="{{ HOST }}/assets/images/pocket.png">
 
         <!-- Bootstrap CSS -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -12,8 +13,14 @@
         <title>Links pockets</title>
     </head>
     <body>
-        <div class="container">
+        <div class="container position-relative">
+            {% if session.notification %}
+                <div class="alert alert-{{ session.notification.type }} position-absolute notification" role="alert">
+                    {{ session.notification.msg|raw }}
+                </div>
+            {% endif %}
             <div class="float-end">
+
                 <div class="dropdown mt-2">
                     <button class="btn btn-secondary" type="button" id="optionsMenu" data-bs-toggle="dropdown" aria-expanded="false">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-gear" viewBox="0 0 16 16">
@@ -39,7 +46,7 @@
                     </a>
                 </div>
 
-                <nav class="nav" style="" aria-label="breadcrumb">
+                <nav class="nav" aria-label="breadcrumb">
                     {% include 'breadcrumb.tpl' %}
                 </nav>
 
@@ -87,6 +94,5 @@
         <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
         <script src="{{ HOST }}/assets/js/Validator.js"></script>
         <script src="{{ HOST }}/assets/js/script.js"></script>
-        {#        <a href="https://www.flaticon.com/free-icons/pocket" title="pocket icons">Pocket icons created by Freepik - Flaticon</a>#}
     </body>
 </html>

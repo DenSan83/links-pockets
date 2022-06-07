@@ -4,6 +4,13 @@ $(() => {
     pop.map(trigger => {
         return new bootstrap.Popover(trigger)
     });
+    // Hide notifications
+    if ($('.alert.notification').length > 0) {
+        const alert = bootstrap.Alert.getOrCreateInstance('.alert.notification');
+        setTimeout(function() {
+            alert.close()
+        }, 3000);
+    }
 
     // Card options
     $('.options, .buttons .close, button.close').on('click', e => {
@@ -33,8 +40,8 @@ $(() => {
     $('#folder').on('click', () => {
         $('#newFolder').modal('show');
     });
-    $("#newLink").on('shown.bs.modal', function(){
-        $(this).find('input:first').focus();
+    $('#newLink').on('shown.bs.modal', function(){
+        $(this).find('input:first').trigger('focus');
     });
     
     // Modify
@@ -42,7 +49,7 @@ $(() => {
         let id = $(e.currentTarget).parents('.options-layer').data('id');
         let url = $('#home').attr('href') + '/find-id';
         $.post( url, { id: id })
-        .done((response, result) => {
+        .done((response) => {
             response = JSON.parse(response);
             if (response.success) {
                 $('#editLink').modal('show');
@@ -62,7 +69,7 @@ $(() => {
         let id = $(e.currentTarget).parents('.options-layer').data('id');
         let url = $('#home').attr('href') + '/find-id';
         $.post( url, { id: id })
-        .done((response, result) => {
+        .done((response) => {
             response = JSON.parse(response);
             if (response.success) {
                 $('#editFolder').modal('show');
@@ -94,7 +101,40 @@ $(() => {
         validator.validateFolder('#editFolderForm');
     })
 
+    $('.delete').on('click', e => {
+        let id = $(e.currentTarget).parents('.options-layer').data('id');
+        let url = $('#home').attr('href') + '/find-id';
 
+        $.post( url, { id: id })
+            .done((response) => {
+                response = JSON.parse(response);
+                if (response.success) {
+                    $('#deleteModal').modal('show');
+
+                    $('#deleteForm input[name="delete[title]"]').val(response.data.title);
+                    $('#deleteForm input[name="delete[description]"]').val(response.data.description);
+                    $('#deleteForm input[name="delete[id]"]').val(response.data.id);
+                    $('#deleteForm input[name="delete[org]"]').val(response.data.org);
+                } else {
+                    // display errors
+                }
+            })
+    })
+
+    $('#sendDelete').on('click', () => {
+        let form = $('#deleteForm');
+        let url = $(form).data('submitto');
+        let values = $(form).serialize();
+
+        $.post( url, values)
+            .done(response => {
+                response = JSON.parse(response);
+                if (response.deleted) {
+                    location.reload();
+                }
+            })
+
+    })
 
 
 

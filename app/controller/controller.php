@@ -26,4 +26,10 @@ class Controller {
         header('Location: ' . HOST . $route);
         exit();
     }
+
+    protected function notify(string $type, string $message): void
+    {
+        $notificationController = new notificationController();
+        $notificationController->createNotification($type, $message);
+    }
 }
