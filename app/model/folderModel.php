@@ -61,7 +61,7 @@ class FolderModel extends Model
         return $req->execute();
     }
 
-    public function delete(int $id)
+    public function delete(int $id): bool
     {
         $db = $this->db();
         $req = $db->prepare('
@@ -73,12 +73,13 @@ class FolderModel extends Model
         return $req->execute();
     }
 
-    public function search(string $search)
+    public function search(string $search): ?array
     {
         $search = "%$search%";
         $db = $this->db();
         $req = $db->prepare('SELECT * FROM links WHERE title LIKE ? OR description LIKE ? OR url LIKE ?');
         $req->execute([$search, $search, $search]);
+
         return $req->fetchAll(PDO::FETCH_ASSOC);
     }
 }
