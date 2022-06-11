@@ -199,7 +199,7 @@
                     <form id="deleteForm" data-submitto="{{ HOST }}/delete">
                         <div class="mb-3">
                             <label>ID</label>
-                            <input type="text" class="form-control id"  name="delete[id]" style="box-shadow: none; border-color: #ced4da;" readonly>
+                            <input type="text" class="form-control id" id="deleteInputId" name="delete[id]" readonly>
                         </div>
                         <div class="mb-3">
                             <label>Title</label>

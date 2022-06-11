@@ -17,24 +17,52 @@ class UserController extends Controller
     public function createUser()
     {
         // Route '/new-user'
-        $settings = [];
+        $settings['user_count'] = $this->userModel->countUsers();
         if (isset($_POST['user'])) {
-            if ($_POST['user']['pw'] === $_POST['user']['pw2']) {
+            $check = $this->verifyPassword($_POST['user']['pw']);
+            $check['update'] = true;
+            $check['no_exist'] = !$this->userModel->checkExistingUser($_POST['user']['email']);
+            $check['same'] = $_POST['user']['pw'] === $_POST['user']['pw2'];
 
-                if (!$this->userModel->checkExistingUser($_POST['user']['name'])) {
-                    $_POST['user']['hash'] = password_hash($_POST['user']['pw'],PASSWORD_DEFAULT, ['cost' => 12]);
+            if ($check['passed'] && $check['same'] && $check['no_exist']) {
+                // hash password
+                $_POST['user']['hash'] = password_hash($_POST['user']['pw'],PASSWORD_DEFAULT, ['cost' => 12]);
 
-                    if ($this->userModel->createUser($_POST['user'])) {
-                        if ($this->login($_POST['user']['name'], $_POST['user']['pw'])) {
-                            $this->redirect('/');
-                        }
+                // Create user
+                if ($this->userModel->createUser($_POST['user'])) {
+                    if ($this->login($_POST['user']['email'], $_POST['user']['pw'])) {
+                        $this->redirect('/');
                     }
-                } else {
-                    $settings['error'] = 'This user already exist';
                 }
             } else {
-                $settings['error'] = 'Passwords don\'t match';
+                // Prepare errors return
+                $settings['pwCheck'] = $check;
+                if (!$check['no_exist']) {
+                    $settings['errors'][] = 'This user email already exists';
+                }
+                if (!$check['same']) {
+                    $settings['errors'][] = 'Passwords don\'t match';
+                }
+
             }
+
+
+
+//                if ($_POST['user']['pw'] === $_POST['user']['pw2']) {
+//
+//                if (!$this->userModel->checkExistingUser($_POST['user']['email'])) {
+//
+//                    if ($this->userModel->createUser($_POST['user'])) {
+//                        if ($this->login($_POST['user']['email'], $_POST['user']['pw'])) {
+//                            $this->redirect('/');
+//                        }
+//                    }
+//                } else {
+//                    $settings['error'] = 'This user already exist';
+//                }
+//            } else {
+//                $settings['error'] = 'Passwords don\'t match';
+//            }
 
             $settings['user'] = $_POST['user'];
         }
@@ -48,8 +76,8 @@ class UserController extends Controller
         $settings = [];
         if (isset($_POST['user'])) {
 
-            if ($this->userModel->checkExistingUser($_POST['user']['name'])) {
-                if ($this->login($_POST['user']['name'], $_POST['user']['pw'])) {
+            if ($this->userModel->checkExistingUser($_POST['user']['email'])) {
+                if ($this->login($_POST['user']['email'], $_POST['user']['pw'])) {
                     $this->redirect('/');
                 } else {
                     $settings['error'] = 'Incorrect user or password';
@@ -63,10 +91,10 @@ class UserController extends Controller
         $view->load('login', $settings);
     }
 
-    public function login(string $name = '', string $pw = ''): bool
+    public function login(string $email = '', string $pw = ''): bool
     {
-        if (password_verify($pw, $this->userModel->getHashFromUser($name))) {
-            $_SESSION['user_data'] = $this->userModel->getUserFromName($name);
+        if (password_verify($pw, $this->userModel->getHashFromEmail($email))) {
+            $_SESSION['user_data'] = $this->userModel->getUserFromEmail($email);
             return true;
         }
 
@@ -77,5 +105,21 @@ class UserController extends Controller
     {
         session_destroy();
         $this->redirect('/');
+    }
+
+    private function verifyPassword(string $pass): array
+    {
+        $eigChar = strlen($pass) >= 8; // Minimum 8 characters
+        $upper = preg_match("/^(?=\S*[A-Z])\S*$/", $pass) === 1;
+        $lower = preg_match("/^(?=\S*[a-z])\S*$/", $pass) === 1;
+        $number = preg_match("/^(?=\S*[\d])\S*$/", $pass) === 1;
+
+        return [
+            'length' => $eigChar,
+            'upper' => $upper,
+            'lower' => $lower,
+            'number' => $number,
+            'passed' => $eigChar && $upper && $lower && $number
+        ];
     }
 }

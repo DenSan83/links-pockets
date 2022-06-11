@@ -125,3 +125,14 @@
     top: 0.5em;
     right: 4em;
 }
+
+#deleteInputId {
+    box-shadow: none;
+    border-color: #ced4da;
+}
+#userForm {
+    border: 1px solid black;
+}
+#offcanvasNavbar {
+    z-index: 2000;
+}

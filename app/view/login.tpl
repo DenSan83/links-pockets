@@ -19,7 +19,7 @@
 
             <img class="mb-4" src="assets/images/pocket.png" width="72" height="72">
             <h1 class="h3 mb-3 font-weight-normal">Link Pockets</h1>
-            <input type="text" name="user[name]" id="inputEmail" class="form-control" value="{{ feedback.email }}" placeholder="Email" required autofocus>
+            <input type="email" name="user[email]" id="inputEmail" class="form-control" value="{{ feedback.email }}" placeholder="Email" required autofocus>
 
             <input type="password" name="user[pw]" id="inputPassword" class="form-control mt-3" placeholder="Mot de passe" required>
 

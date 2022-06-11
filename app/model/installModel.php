@@ -10,6 +10,8 @@ class InstallModel extends Model
                 CREATE TABLE IF NOT EXISTS users(
                     id INT AUTO_INCREMENT PRIMARY KEY,
                     username VARCHAR(255) NOT NULL,
+                    email VARCHAR(255) NOT NULL,
+                    avatar VARCHAR(255),
                     pw VARCHAR(255) NOT NULL,
                     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
                 ) ENGINE = InnoDB;
