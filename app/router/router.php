@@ -3,52 +3,14 @@
 class Router
 {
     private string $request;
-
-    private array $routes = [
-            'home' => [
-                'controller' => 'Controller',
-                'method' => 'init'
-            ],
-            'new-user' => [
-                'controller' => 'UserController',
-                'method' => 'createUser'
-            ],
-            'folder' => [
-                'controller' => 'FolderController',
-                'method' => 'init'
-            ],
-            'create' => [
-                'controller' => 'FolderController',
-                'method' => 'create'
-            ],
-            'find-id' => [
-                'controller' => 'FolderController',
-                'method' => 'findId'
-            ],
-            'edit' => [
-                'controller' => 'FolderController',
-                'method' => 'edit'
-            ],
-            'delete' => [
-                'controller' => 'FolderController',
-                'method' => 'delete'
-            ],
-            'search' => [
-                'controller' => 'FolderController',
-                'method' => 'search'
-            ],
-            'login' => [
-                'controller' => 'UserController',
-                'method' => 'loginPage'
-            ],
-            'logout' => [
-                'controller' => 'UserController',
-                'method' => 'logout'
-            ]
-        ];
+    private array $routes = [];
 
     public function __construct($request)
     {
+        if (empty($this->routes)) {
+            $routesJson = file_get_contents('app/router/routes.json');
+            $this->routes = json_decode($routesJson, true);
+        }
         $this->request = $request;
     }
 

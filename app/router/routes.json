@@ -1,0 +1,42 @@
+{
+  "home": {
+    "controller": "Controller",
+    "method": "init"
+  },
+  "folder": {
+    "controller": "FolderController",
+    "method": "init"
+  },
+  "create": {
+    "controller": "FolderController",
+    "method": "create"
+  },
+  "find-id": {
+    "controller": "FolderController",
+    "method": "findId"
+  },
+  "edit": {
+    "controller": "FolderController",
+    "method": "edit"
+  },
+  "delete": {
+    "controller": "FolderController",
+    "method": "delete"
+  },
+  "search": {
+    "controller": "FolderController",
+    "method": "search"
+  },
+  "new-user": {
+    "controller": "UserController",
+    "method": "createUser"
+  },
+  "login": {
+    "controller": "UserController",
+    "method": "login"
+  },
+  "logout": {
+    "controller": "UserController",
+    "method": "logout"
+  }
+}
