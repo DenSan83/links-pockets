@@ -46,24 +46,6 @@ class UserController extends Controller
 
             }
 
-
-
-//                if ($_POST['user']['pw'] === $_POST['user']['pw2']) {
-//
-//                if (!$this->userModel->checkExistingUser($_POST['user']['email'])) {
-//
-//                    if ($this->userModel->createUser($_POST['user'])) {
-//                        if ($this->login($_POST['user']['email'], $_POST['user']['pw'])) {
-//                            $this->redirect('/');
-//                        }
-//                    }
-//                } else {
-//                    $settings['error'] = 'This user already exist';
-//                }
-//            } else {
-//                $settings['error'] = 'Passwords don\'t match';
-//            }
-
             $settings['user'] = $_POST['user'];
         }
         $view = new View();

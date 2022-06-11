@@ -5,7 +5,7 @@ class User
     private int $_id;
     private string $name;
     private string $email;
-    private string $avatar;
+    private ?string $avatar;
     private string $createdAt;
 
     public function __construct(array $user)
@@ -13,7 +13,7 @@ class User
         $this->_id = $user['id'];
         $this->name = $user['username'];
         $this->email = $user['email'];
-        $this->avatar = $user['avatar'];
+        $this->avatar = $user['avatar'] ?? '';
         $this->createdAt = $user['created_at'];
     }
 
