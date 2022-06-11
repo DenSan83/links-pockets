@@ -44,4 +44,22 @@ class UserModel extends Model
             return null;
         }
     }
+
+    public function getHashFromUser($name): ?string
+    {
+        try {
+            $db = $this->db();
+            $req = $db->prepare('SELECT pw FROM users WHERE username = :username');
+            $req->bindValue(':username', $name);
+            $req->execute();
+
+            $userArray = $req->fetch(PDO::FETCH_ASSOC);
+
+            return $userArray['pw'];
+        } catch (Exception $e) {
+            $this->errorLog($e);
+
+            return null;
+        }
+    }
 }

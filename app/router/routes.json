@@ -33,7 +33,7 @@
   },
   "login": {
     "controller": "UserController",
-    "method": "login"
+    "method": "loginPage"
   },
   "logout": {
     "controller": "UserController",

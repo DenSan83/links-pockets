@@ -57,13 +57,13 @@ class UserController extends Controller
         $view->load('login', $settings);
     }
 
-    public function login(string $name, string $pw): bool
+    public function login(string $name = '', string $pw = ''): bool
     {
         $userModel = new UserModel();
-        $user = $userModel->getUserFromName($name);
+        $password = $userModel->getHashFromUser($name);
 
-        if (password_verify($pw, $user->getHash())) {
-            $_SESSION['user_data'] = $user;
+        if (password_verify($pw, $password)) {
+            $_SESSION['user_data'] = $userModel->getUserFromName($name);
             return true;
         }
 

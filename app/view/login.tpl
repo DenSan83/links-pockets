@@ -1,36 +1,37 @@
 <!doctype html>
 <html lang="en">
-<head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <!-- Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
-    <link rel="stylesheet" href="./assets/css/style.css">
-    <title>Links pockets - New user</title>
-</head>
-<body>
-<div class="container">
-    <h1 class="text-center">Login</h1>
-    <div>
-        <p>Please login</p>
-    </div>
-    <form method="post">
-        <div class="mb-3">
-            <input type="text" class="form-control" name="user[name]" value="{{ user.name }}" placeholder="Username" required autofocus>
-        </div>
-        <div class="mb-3">
-            <input type="password" class="form-control" name="user[pw]" value="{{ user.pw }}" placeholder="Password" required>
-        </div>
-        <div class="mb-3">
-            <button class="btn btn-outline-primary" type="submit">Submit</button>
-        </div>
-    </form>
-    {% if error %}
-        <p class="text-danger">{{ error }}</p>
-    {% endif %}
-</div>
-</body>
+        <link rel="icon" type="image/png" href="./assets/images/pocket.png">
+        <link rel="stylesheet" href="./assets/css/login.css">
+        <title>Links pockets - New user</title>
+    </head>
+
+
+    <body class="text-center">
+        <form class="form-signin" method="post">
+
+            <img class="mb-4" src="assets/images/pocket.png" width="72" height="72">
+            <h1 class="h3 mb-3 font-weight-normal">Link Pockets</h1>
+            <input type="text" name="user[name]" id="inputEmail" class="form-control" value="{{ feedback.email }}" placeholder="Email" required autofocus>
+
+            <input type="password" name="user[pw]" id="inputPassword" class="form-control mt-3" placeholder="Mot de passe" required>
+
+            <button class="btn btn-lg btn-primary btn-block mt-3" type="submit">Connexion</button>
+            <br>
+            {% if error %}
+                <div class="alert alert-danger mt-3" role="alert">
+                    {{ error }}
+                </div>
+            {% endif %}
+            <p class="mt-5 mb-3 text-muted">desan.fr - &copy; 2022</p>
+        </form>
+    </body>
+
 </html>
