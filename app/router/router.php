@@ -33,6 +33,10 @@ class Router
                 'controller' => 'FolderController',
                 'method' => 'delete'
             ],
+            'search' => [
+                'controller' => 'FolderController',
+                'method' => 'search'
+            ],
             'login' => [
                 'controller' => 'UserController',
                 'method' => 'loginPage'

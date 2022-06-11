@@ -2,10 +2,16 @@
 
 class FolderController extends Controller
 {
+    private FolderModel $folderModel;
+
+    public function __construct()
+    {
+        $this->folderModel = new FolderModel();
+    }
+
     public function fetch($data): void
     {
-        $folderModel = new FolderModel();
-        $allLinks = $folderModel->getLinks();
+        $allLinks = $this->folderModel->getLinks();
 
         // Org
         $home = ['*'];
@@ -28,7 +34,7 @@ class FolderController extends Controller
         $settings['content'] = array_merge($folderList, $linkList);
 
         $view = new View();
-        $view->load('layout', $settings);
+        $view->load('main', $settings);
     }
 
     public function create($data): void
@@ -60,8 +66,7 @@ class FolderController extends Controller
         if (!isset($fullData)) {
             exit(json_encode(['errors' => 'Form not found']));
         }
-        $folderModel = new FolderModel();
-        $result = $folderModel->create($fullData);
+        $result = $this->folderModel->create($fullData);
 
         if ($result) {
             $content['success'] = true;
@@ -109,8 +114,7 @@ class FolderController extends Controller
         }
 
         $this->getOneOfMine($fullData['id']);
-        $folderModel = new FolderModel();
-        $result = $folderModel->edit($fullData);
+        $result = $this->folderModel->edit($fullData);
 
         $return = [
             'success' => true,
@@ -126,9 +130,7 @@ class FolderController extends Controller
             exit(json_encode(['errors' => 'Form not found']));
         }
         $found = $this->getOneOfMine($data['delete']['id']);
-
-        $folderModel = new FolderModel();
-        $result = $folderModel->delete($found['id']);
+        $result = $this->folderModel->delete($found['id']);
 
         $this->notify('success',
     '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="me-1 mb-1 bi bi-trash3" viewBox="0 0 16 16">
@@ -141,6 +143,20 @@ class FolderController extends Controller
             'found' => $data
         ];
         exit(json_encode($return));
+    }
+
+    public function search()
+    {
+        $content = [];
+        if (!empty($_GET['keyword'])) {
+            $content = $this->folderModel->search($_GET['keyword']);
+        }
+
+        $view = new View();
+        $view->load('search', [
+            'content' => $content,
+            'keyword' => $_GET['keyword']
+        ]);
     }
 
     private function getOneOfMine(int $id)

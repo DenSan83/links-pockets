@@ -72,4 +72,13 @@ class FolderModel extends Model
 
         return $req->execute();
     }
+
+    public function search(string $search)
+    {
+        $search = "%$search%";
+        $db = $this->db();
+        $req = $db->prepare('SELECT * FROM links WHERE title LIKE ? OR description LIKE ? OR url LIKE ?');
+        $req->execute([$search, $search, $search]);
+        return $req->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
