@@ -2,10 +2,16 @@
 
 class UserController extends Controller
 {
+    private UserModel $userModel;
+
+    public function __construct()
+    {
+        $this->userModel = new UserModel();
+    }
+
     public function countUsers(): int
     {
-        $model = new UserModel();
-        return $model->countUsers();
+        return $this->userModel->countUsers();
     }
 
     public function createUser()
@@ -14,11 +20,11 @@ class UserController extends Controller
         $settings = [];
         if (isset($_POST['user'])) {
             if ($_POST['user']['pw'] === $_POST['user']['pw2']) {
-                $userModel = new UserModel();
-                if (!$userModel->checkExistingUser($_POST['user']['name'])) {
+
+                if (!$this->userModel->checkExistingUser($_POST['user']['name'])) {
                     $_POST['user']['hash'] = password_hash($_POST['user']['pw'],PASSWORD_DEFAULT, ['cost' => 12]);
 
-                    if ($userModel->createUser($_POST['user'])) {
+                    if ($this->userModel->createUser($_POST['user'])) {
                         if ($this->login($_POST['user']['name'], $_POST['user']['pw'])) {
                             $this->redirect('/');
                         }
@@ -41,8 +47,8 @@ class UserController extends Controller
         // Route '/login'
         $settings = [];
         if (isset($_POST['user'])) {
-            $userModel = new UserModel();
-            if ($userModel->checkExistingUser($_POST['user']['name'])) {
+
+            if ($this->userModel->checkExistingUser($_POST['user']['name'])) {
                 if ($this->login($_POST['user']['name'], $_POST['user']['pw'])) {
                     $this->redirect('/');
                 } else {
@@ -59,11 +65,8 @@ class UserController extends Controller
 
     public function login(string $name = '', string $pw = ''): bool
     {
-        $userModel = new UserModel();
-        $password = $userModel->getHashFromUser($name);
-
-        if (password_verify($pw, $password)) {
-            $_SESSION['user_data'] = $userModel->getUserFromName($name);
+        if (password_verify($pw, $this->userModel->getHashFromUser($name))) {
+            $_SESSION['user_data'] = $this->userModel->getUserFromName($name);
             return true;
         }
 
