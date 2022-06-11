@@ -5,9 +5,23 @@ class Controller {
     public function init($data)
     {
         // Route '/'
+        $installController = new InstallController();
         if (!file_exists('PDO_info.php')) {
-            $installController = new InstallController();
             $installController->install();
+            exit;
+        }
+        $testConnection = $installController->testConnection();
+        if ($testConnection['result'] === 'ko') {
+            if (isset($_POST['confirm']['no'])) {
+                unset($_POST);
+                if (file_exists('PDO_info.php')) {
+                    unlink('PDO_info.php');
+                }
+                $testConnection = [];
+            }
+
+            $view = new View();
+            $view->load('install', $testConnection);
             exit;
         }
         if ((new UserController())->countUsers() === 0) {

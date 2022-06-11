@@ -3,15 +3,20 @@ require_once './app/model/installModel.php';
 
 class InstallController extends Controller
 {
-    public function install()
+    public function install(string $msg = '')
     {
-        $settings = [];
+        $settings['msg'] = $msg;
         if (isset($_POST['pdo'])) {
             $settings['pdo'] = $_POST['pdo'];
         }
+
+        $view = new View();
         if (isset($_POST['confirm'])) {
             if (isset($_POST['confirm']['no'])) {
                 unset($_POST);
+                if (file_exists('PDO_info.php')) {
+                    unlink('PDO_info.php');
+                }
             } else {
                 // Store DB data
                 $data = [
@@ -22,14 +27,28 @@ class InstallController extends Controller
                 ];
                 file_put_contents('PDO_info.php', serialize($data));
 
-                // Create tables
-                if (!$this->createTables()) return;
+                // Test tables
+                $test = $this->testConnection();
+                if ($test['result'] === 'ko') {
+
+                    $view->load('install', $test);
+                    exit;
+                } else {
+                    // Create tables
+                    $this->createTables();
+                }
 
                 $this->redirect();
             }
         }
-        $view = new View();
+
         $view->load('install', $settings);
+    }
+
+    public function testConnection(): array
+    {
+        $model = new Model();
+        return ($model->testDbConnection());
     }
 
     public function createTables(): bool

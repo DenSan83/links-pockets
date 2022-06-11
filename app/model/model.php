@@ -4,7 +4,7 @@ class Model
 {
     public ?PDO $pdo = null;
 
-    public function db(): PDO
+    public function db(): ?PDO
     {
         if (!$this->pdo instanceof PDO) {
             $rawData = file_get_contents('PDO_info.php');
@@ -16,10 +16,30 @@ class Model
                 $this->pdo = new PDO("mysql:host=$PDO_host;dbname=$PDO_dbname;charset=utf8", $pdoData['user'], $pdoData['pass']);
                 date_default_timezone_set('Europe/Paris');
             } catch (PDOException $e) {
-                $this->errorLog($e);
+                $installController = new InstallController();
+                $installController->install($e->getMessage());
             }
         }
         return $this->pdo;
+    }
+
+    public function testDbConnection(): array
+    {
+        $rawData = file_get_contents('PDO_info.php');
+        $pdoData = unserialize($rawData);
+        $PDO_host = $pdoData['host'];
+        $PDO_dbname = $pdoData['name'];
+
+        try {
+            new PDO("mysql:host=$PDO_host;dbname=$PDO_dbname;charset=utf8", $pdoData['user'], $pdoData['pass']);
+            $return['result'] = 'ok';
+        } catch (PDOException $e) {
+            $return['result'] = 'ko';
+            $return['error'] = $e->getMessage();
+            $return['pdo'] = $pdoData;
+        }
+
+        return $return;
     }
 
     public function errorLog(Exception $e): void
