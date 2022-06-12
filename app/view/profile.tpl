@@ -13,7 +13,7 @@
         <title>Links pockets - New user</title>
     </head>
     <body>
-        <div class="container">
+        <div class="container position-relative">
             {% if session.notification %}
                 <div class="alert alert-{{ session.notification.type }} position-absolute notification" role="alert">
                     {{ session.notification.msg|raw }}
@@ -41,7 +41,7 @@
                 </div>
             {% endif %}
 
-            <form class="form-signin rounded p-1 pb-3 mb-5" id="userForm" method="post">
+            <form class="form-signin rounded p-1 pb-3 mt-4 mb-5" id="userForm" method="post">
                 <div class="row">
                     <div class="col-lg-3 text-center pe-4 pt-3">
                         <div class="position-relative">
