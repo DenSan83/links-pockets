@@ -47,7 +47,7 @@
                         <div class="position-relative">
                             {% if session.user_data %}
                                 <a href="#uploadModal" class="top-screen text-light btn position-absolute rounded-circle d-flex align-items-center justify-content-center" data-bs-toggle="modal" data-bs-target="#uploadModal">
-                                    changer
+                                    change
                                 </a>
                             {% endif %}
                             {% if session.user_data.avatar %}
