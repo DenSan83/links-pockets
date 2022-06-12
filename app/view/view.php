@@ -1,16 +1,21 @@
 <?php
+
+use Twig\Environment;
+use Twig\Extension\DebugExtension;
+use Twig\Loader\FilesystemLoader;
+
 include_once './vendor/autoload.php';
 
 class View {
     private object $twig;
 
     public function __construct(){
-        $loader = new \Twig\Loader\FilesystemLoader(__DIR__);
-        $this->twig = new \Twig\Environment($loader, [
+        $loader = new FilesystemLoader(__DIR__);
+        $this->twig = new Environment($loader, [
             'cache' => false,
             'debug' =>true
         ]);
-        $this->twig->addExtension(new \Twig\Extension\DebugExtension());
+        $this->twig->addExtension(new DebugExtension());
 
         return $this->twig;
     }
