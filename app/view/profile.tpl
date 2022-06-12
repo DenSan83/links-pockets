@@ -100,11 +100,6 @@
                                 <li {% if pwCheck.update and not pwCheck.upper %} class="text-danger" {% endif %} >At least one upper character</li>
                                 <li {% if pwCheck.update and not pwCheck.lower %} class="text-danger" {% endif %} >At least one lower character</li>
                                 <li {% if pwCheck.update and not pwCheck.number %} class="text-danger" {% endif %} >At least one number</li>
-                                <li>A Haiku</li>
-                                <li>A musical note</li>
-                                <li>A hieroglyph</li>
-                                <li>The feather of a hawk</li>
-                                <li>A drop of unicorn blood</li>
                             </ul>
                         </small>
 

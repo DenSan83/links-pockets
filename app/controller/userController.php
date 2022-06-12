@@ -27,10 +27,10 @@ class UserController extends Controller
                 if ($this->userModel->createUser($_POST['user'])) {
                     if (isset($_SESSION['user_data'])) {
                         $this->notify('success', 'The new user ' . $_POST['user']['name'] . ' has been added successfully to database');
-                        $this->redirect('/');
-                    } elseif ($this->login($_POST['user']['email'], $_POST['user']['pw'])) {
-                        $this->redirect('/');
+                    } else {
+                        $this->login($_POST['user']['email'], $_POST['user']['pw']);
                     }
+                    $this->redirect('/');
                 }
             } else {
                 // Prepare errors return
