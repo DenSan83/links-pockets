@@ -20,7 +20,7 @@
                 </div>
             {% endif %}
 
-            {% if user %}
+            {% if session.user_data %}
                 <div class="dropdown mt-2 float-end">
                     <button class="btn btn-secondary d-flex py-2 px-3" type="button" id="optionsMenu" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
                         {{ 'gear'|icon }}
@@ -38,6 +38,12 @@
                 <div class="alert alert-primary" role="alert">
                     The first user will become the admin of this app. <br>
                     Let's create our first user :
+                </div>
+            {% else %}
+                <div class="alert alert-warning" role="alert">
+                    {{ 'exclamationtriangle'|icon }}
+                    <b>IMPORTANT:</b> This app does not notify anyone when you create a new user. <br>
+                    Please keep all login informations somewhere safe and transmit it yourself to the concerned user.
                 </div>
             {% endif %}
 

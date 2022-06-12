@@ -12,6 +12,14 @@
                     Home
                 </a>
             </li>
+            {% if session.user_data.id == 1 %}
+            <li class="rounded">
+                <a href="{{ HOST }}/new-user" class="nav-link link-dark">
+                    {{ 'personplus'|icon(16, 'me-2') }}
+                    Add new user
+                </a>
+            </li>
+            {% endif %}
         </ul>
         <hr>
 
