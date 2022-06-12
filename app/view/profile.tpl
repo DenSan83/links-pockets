@@ -20,7 +20,7 @@
                 </div>
             {% endif %}
 
-            {% if session.user_data %}
+            {% if user %}
                 <div class="dropdown mt-2 float-end">
                     <button class="btn btn-secondary d-flex py-2 px-3" type="button" id="optionsMenu" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
                         {{ 'gear'|icon }}
@@ -29,7 +29,7 @@
                 </div>
             {% endif %}
 
-            {% if session.user_data %}
+            {% if user %}
                 <h1 class="text-center mt-5">User profile</h1>
             {% else %}
                 <h1 class="text-center mt-5">Create new user</h1>
@@ -45,13 +45,13 @@
                 <div class="row">
                     <div class="col-lg-3 text-center pe-4 pt-3">
                         <div class="position-relative">
-                            {% if session.user_data %}
+                            {% if user %}
                                 <a href="#uploadModal" class="top-screen text-light btn position-absolute rounded-circle d-flex align-items-center justify-content-center" data-bs-toggle="modal" data-bs-target="#uploadModal">
                                     change
                                 </a>
                             {% endif %}
-                            {% if session.user_data.avatar %}
-                                <img class="mb-4 rounded-circle user-avatar" src="{{ HOST }}/assets/images/uploads/{{ session.user_data.id }}/{{ session.user_data.avatar }}" width="100" height="100">
+                            {% if user.avatar %}
+                                <img class="mb-4 rounded-circle user-avatar" src="{{ HOST }}/assets/images/uploads/{{ user.id }}/{{ user.avatar }}" width="100" height="100">
                             {% else %}
                                 {{ 'personcircle'|icon(100) }}
                             {% endif %}
@@ -59,15 +59,13 @@
                     </div>
 
                     <div class="col-lg-6">
-                        <h1 class="h3 mb-3 font-weight-normal">{{ user.mail }}</h1>
-
                         <div class="mb-3">
                             <label for="inputName" class="form-label">User name</label>
-                            <input type="text" name="user[name]" id="inputName" class="form-control" value="{{ session.user_data.name }}" placeholder="The way we will call you" required autofocus>
+                            <input type="text" name="user[name]" id="inputName" class="form-control" value="{{ user.name }}" placeholder="The way we will call you" required autofocus>
                         </div>
                         <div class="mb-3">
                             <label for="inputEmail" class="form-label">Email</label>
-                            <input type="email" name="user[email]" id="inputEmail" class="form-control" value="{{ session.user_data.email }}" placeholder="Your email will help you connect to this app" required>
+                            <input type="email" name="user[email]" id="inputEmail" class="form-control" value="{{ user.email }}" placeholder="Your email will help you connect to this app" required>
                         </div>
                         <div class="mb-3">
                             <label for="inputPass1" class="form-label">Password</label>
@@ -77,8 +75,8 @@
                             <label for="inputPass2" class="form-label">Repeat password</label>
                             <input type="password" name="user[pw2]" id="inputPass2" class="form-control">
                         </div>
-                        {% if session.user_data %}
-                            <input type="hidden" name="user[id]" value="{{ session.user_data.id }}">
+                        {% if user %}
+                            <input type="hidden" name="user[id]" value="{{ user.id }}">
                         {% endif %}
 
                         {% if errors %}
@@ -113,7 +111,7 @@
                 {% endif %}
 
                 <div class="d-flex justify-content-end">
-                    {% if session.user_data %}
+                    {% if user %}
                         <a href="{{ HOST }}/folder/{{ session.breadcrumb|join('/') }}" class="btn btn-lg btn-secondary btn-block mt-3 me-3" type="button">Back</a>
                     {% endif %}
                     <button class="btn btn-lg btn-primary btn-block mt-3 me-3" type="submit">Save</button>
@@ -132,8 +130,8 @@
                         <form method="post" enctype="multipart/form-data">
                             <div class="modal-body">
                                 <div class="w-100 text-center">
-                                    {% if session.user_data.avatar %}
-                                        <img src="{{ HOST }}/assets/images/uploads/{{ session.user_data.id }}/{{ session.user_data.avatar }}" width="200" height="200" class="rounded-circle me-2 user-avatar">
+                                    {% if user.avatar %}
+                                        <img src="{{ HOST }}/assets/images/uploads/{{ user.id }}/{{ user.avatar }}" width="200" height="200" class="rounded-circle me-2 user-avatar">
                                     {% else %}
                                         {{ 'personcircle'|icon(200) }}
                                     {% endif %}

@@ -50,6 +50,10 @@ class UserController extends Controller
     public function getProfile()
     {
         $settings = [];
+        if (!empty($_SESSION['user_data'])) {
+            $settings['user'] = $_SESSION['user_data'];
+        }
+
         if (isset($_POST['user'])) {
             if (empty($_POST['user']['pw']) && empty($_POST['user']['pw2'])) {
                 $check['same'] = $check['passed'] = $check['length'] = $check['upper'] = $check['lower'] = $check['number'] = true;
