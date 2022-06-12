@@ -43,6 +43,9 @@ $(() => {
     $('#newLink').on('shown.bs.modal', function(){
         $(this).find('input:first').trigger('focus');
     });
+    $('#newFolder').on('shown.bs.modal', function(){
+        $(this).find('input:first').trigger('focus');
+    });
     
     // Modify
     $('.edit').on('click', e => {
