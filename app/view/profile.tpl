@@ -96,6 +96,11 @@
                                 <li {% if pwCheck.update and not pwCheck.upper %} class="text-danger" {% endif %} >At least one upper character</li>
                                 <li {% if pwCheck.update and not pwCheck.lower %} class="text-danger" {% endif %} >At least one lower character</li>
                                 <li {% if pwCheck.update and not pwCheck.number %} class="text-danger" {% endif %} >At least one number</li>
+                                <li>A Haiku</li>
+                                <li>A musical note</li>
+                                <li>A hieroglyph</li>
+                                <li>The feather of a hawk</li>
+                                <li>A drop of unicorn blood</li>
                             </ul>
                         </small>
 
@@ -140,7 +145,7 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary">Upload</button>
+                                <button type="submit" class="btn btn-primary sender">Upload</button>
                             </div>
                         </form>
                     </div>
@@ -151,6 +156,7 @@
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
         <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+        <script src="{{ HOST }}/assets/js/Validator.js"></script>
         <script src="{{ HOST }}/assets/js/script.js"></script>
     </body>
 </html>

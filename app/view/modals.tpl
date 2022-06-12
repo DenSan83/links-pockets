@@ -36,7 +36,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" id="sendNew" class="btn btn-primary">Create link</button>
+                <button type="button" id="sendNew" class="btn btn-primary sender">Create link</button>
             </div>
         </div>
     </div>
@@ -71,7 +71,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" id="sendNewFolder" class="btn btn-primary">Create folder</button>
+                <button type="button" id="sendNewFolder" class="btn btn-primary sender">Create folder</button>
             </div>
         </div>
     </div>
@@ -116,7 +116,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" id="sendEdit" class="btn btn-primary">Edit link</button>
+                <button type="button" id="sendEdit" class="btn btn-primary sender">Edit link</button>
             </div>
         </div>
     </div>
@@ -155,7 +155,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" id="sendEditFolder" class="btn btn-primary">Edit Folder</button>
+                <button type="button" id="sendEditFolder" class="btn btn-primary sender">Edit Folder</button>
             </div>
         </div>
     </div>

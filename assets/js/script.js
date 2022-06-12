@@ -7,7 +7,7 @@ $(() => {
     // Hide notifications
     if ($('.alert.notification').length > 0) {
         const alert = bootstrap.Alert.getOrCreateInstance('.alert.notification');
-        setTimeout(function() {
+        setTimeout(() => {
             alert.close()
         }, 3000);
     }
@@ -40,11 +40,17 @@ $(() => {
     $('#folder').on('click', () => {
         $('#newFolder').modal('show');
     });
-    $('#newLink').on('shown.bs.modal', function(){
+    $('#newLink').on('shown.bs.modal',  () => {
         $(this).find('input:first').trigger('focus');
     });
-    $('#newFolder').on('shown.bs.modal', function(){
+    $('#newFolder').on('shown.bs.modal', () => {
         $(this).find('input:first').trigger('focus');
+    });
+    // Send any form
+    $('input').on('keypress',e => {
+        if (e.key === 'Enter') {
+            $(e.target).parents('.modal-content').find('.sender').trigger('click');
+        }
     });
     
     // Modify
