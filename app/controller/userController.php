@@ -9,11 +9,6 @@ class UserController extends Controller
         $this->userModel = new UserModel();
     }
 
-    public function countUsers(): int
-    {
-        return $this->userModel->countUsers();
-    }
-
     public function createUser()
     {
         // Route '/new-user'
@@ -49,7 +44,64 @@ class UserController extends Controller
             $settings['user'] = $_POST['user'];
         }
         $view = new View();
-        $view->load('new_user', $settings);
+        $view->load('profile', $settings);
+    }
+
+    public function getProfile()
+    {
+        $settings = [];
+        if (isset($_POST['user'])) {
+            if (empty($_POST['user']['pw']) && empty($_POST['user']['pw2'])) {
+                $check['same'] = $check['passed'] = $check['length'] = $check['upper'] = $check['lower'] = $check['number'] = true;
+            } else {
+                $check = $this->verifyPassword($_POST['user']['pw']);
+                $check['same'] = $_POST['user']['pw'] === $_POST['user']['pw2'];
+            }
+            $check['update'] = true;
+            $check['no_exist'] = !$this->userModel->checkExistingUser($_POST['user']['email'], $_POST['user']['id']);
+
+            if ($check['passed'] && $check['same'] && $check['no_exist']) {
+                if (!empty($_POST['user']['pw']) && !empty($_POST['user']['pw2'])) {
+                    // hash password
+                    $_POST['user']['hash'] = password_hash($_POST['user']['pw'],PASSWORD_DEFAULT, ['cost' => 12]);
+                }
+
+                // Update user
+                if ($this->userModel->updateUser($_POST['user'])) {
+                    $_SESSION['user_data']->setName($_POST['user']['name']);
+                    $_SESSION['user_data']->setEmail($_POST['user']['email']);
+                    $this->notify('success', 'Profile updated successfully');
+                    $this->redirect('/profile');
+                }
+            } else {
+                // Prepare errors return
+                $settings['pwCheck'] = $check;
+                if (!$check['no_exist']) {
+                    $settings['errors'][] = 'This user email already exists';
+                }
+                if (!$check['same']) {
+                    $settings['errors'][] = 'Passwords don\'t match';
+                }
+
+            }
+        }
+
+        if (isset($_FILES['photo-upload']) && is_uploaded_file($_FILES['photo-upload']['tmp_name'])) {
+            $uploadResult = $this->upload($_FILES['photo-upload']);
+            if ($uploadResult === 'success') {
+                // update user & session
+                $this->userModel->updateAvatar($_FILES['photo-upload']['name'], $_SESSION['user_data']->getId());
+                $_SESSION['user_data']->setAvatar($_FILES['photo-upload']['name']);
+
+                $this->notify('success', 'Profile avatar updated successfully');
+                $this->redirect('/profile');
+            } else {
+                $settings['errors'][] = $uploadResult;
+            }
+        }
+
+        $view = new View();
+        $view->load('profile', $settings);
     }
 
     public function loginPage(): void
@@ -73,7 +125,7 @@ class UserController extends Controller
         $view->load('login', $settings);
     }
 
-    public function login(string $email = '', string $pw = ''): bool
+    private function login(string $email = '', string $pw = ''): bool
     {
         if (password_verify($pw, $this->userModel->getHashFromEmail($email))) {
             $_SESSION['user_data'] = $this->userModel->getUserFromEmail($email);
@@ -103,5 +155,27 @@ class UserController extends Controller
             'number' => $number,
             'passed' => $eigChar && $upper && $lower && $number
         ];
+    }
+
+    private function upload(array $file)
+    {
+        $fileInfo = pathinfo($file['name']);
+        $acceptedFormats = ['jpg', 'jpeg', 'png', 'gif'];
+        if (!in_array($fileInfo['extension'], $acceptedFormats)) {
+            return 'File format not accepted';
+        }
+        $uploadDir = 'assets'.DIRECTORY_SEPARATOR.'images'.DIRECTORY_SEPARATOR.'uploads'.DIRECTORY_SEPARATOR.'2' . DIRECTORY_SEPARATOR;
+        if (!is_dir($uploadDir)) {
+            if (!mkdir($uploadDir, 077, true)) {
+                return 'Impossible to create necessary folders. Please verify the app rights.';
+            }
+        }
+
+        $fileName = $fileInfo['filename'] . '.' . $fileInfo['extension'];
+        if (move_uploaded_file($file['tmp_name'], $uploadDir . $fileName)) {
+            return 'success';
+        } else {
+            return 'Failed to upload image';
+        }
     }
 }

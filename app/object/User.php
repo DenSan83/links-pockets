@@ -34,6 +34,15 @@ class User
     }
 
     /**
+     * @param mixed|string $name
+     */
+    public function setName(mixed $name): self
+    {
+        $this->name = $name;
+        return $this;
+    }
+
+    /**
      * @return mixed|string
      */
     public function getEmail(): mixed
@@ -42,11 +51,29 @@ class User
     }
 
     /**
+     * @param mixed|string $email
+     */
+    public function setEmail(mixed $email): self
+    {
+        $this->email = $email;
+        return $this;
+    }
+
+    /**
      * @return mixed|string
      */
     public function getAvatar(): mixed
     {
         return $this->avatar;
+    }
+
+    /**
+     * @param mixed|string|null $avatar
+     */
+    public function setAvatar(mixed $avatar): self
+    {
+        $this->avatar = $avatar;
+        return $this;
     }
 
 

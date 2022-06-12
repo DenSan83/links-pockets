@@ -4,14 +4,22 @@
             <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
 
-        {# Horizon top-bottom #}
-        <div class="mb-auto"></div><hr>
+        {# Side Navbar #}
+        <ul class="nav nav-pills flex-column mt-5 mb-auto">
+            <li class="rounded">
+                <a href="{{ HOST }}" class="nav-link link-dark">
+                    <img src="{{ HOST }}/assets/images/pocket.png" alt="Pocket icon" height="16" class="me-2">
+                    Home
+                </a>
+            </li>
+        </ul>
+        <hr>
 
         {# Account management #}
         <div class="dropdown">
             <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle" id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
                 {% if session.user_data.avatar %}
-                    <img src="{{ HOST }}/assets/images/{{ session.user_data.avatar }}" width="32" height="32" class="rounded-circle me-2">
+                    <img src="{{ HOST }}/assets/images/uploads/{{ session.user_data.id }}/{{ session.user_data.avatar }}" width="32" height="32" class="rounded-circle me-2 user-avatar">
                 {% else %}
                     <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-person-circle me-2" viewBox="0 0 16 16">
                         <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>

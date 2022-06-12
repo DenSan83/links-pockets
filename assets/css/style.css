@@ -131,8 +131,30 @@
     border-color: #ced4da;
 }
 #userForm {
-    border: 1px solid black;
+    border: 1px solid #dee2e6;
+    box-shadow: 0 0 0 0.25rem rgb(13 110 253 / 25%);
 }
 #offcanvasNavbar {
     z-index: 2000;
+}
+#offcanvasNavbar .nav li:hover {
+    background-color: #0d6efd;
+}
+#offcanvasNavbar .nav li:hover > a {
+    color: #fff;
+}
+.top-screen {
+    background-color: #00000085;
+    height: 100px;
+    width: 100px;
+    left: 50%;
+    margin-left: -50px;
+    opacity: 0;
+}
+.top-screen:hover {
+    opacity: 1;
+    transition: opacity .4s;
+}
+.user-avatar {
+    object-fit: cover;
 }

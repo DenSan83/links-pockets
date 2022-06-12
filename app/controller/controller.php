@@ -24,7 +24,7 @@ class Controller {
             $view->load('install', $testConnection);
             exit;
         }
-        if ((new UserController())->countUsers() === 0) {
+        if ((new UserModel())->countUsers() === 0) {
             $this->redirect('/new-user');
         }
         if (!isset($_SESSION['user_data'])) {
