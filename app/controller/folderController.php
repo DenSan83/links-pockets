@@ -56,7 +56,7 @@ class FolderController extends Controller
         }
         // Complete newFolder data
         if (isset($data['newFolder'])) {
-            $data['newFolder']['url'] = '/folder/' . implode('/', $_SESSION['breadcrumb']) . '/' . $data['newFolder']['title'];
+            $data['newFolder']['url'] = implode('/', $_SESSION['breadcrumb']) . '/' . $data['newFolder']['title'];
             $data['newFolder']['img'] = 'assets/images/folder.png';
             $data['newFolder']['org'] = implode('/', $_SESSION['breadcrumb']) . '/#';
             $fullData = $data['newFolder'];
