@@ -3,6 +3,7 @@
 use Twig\Environment;
 use Twig\Extension\DebugExtension;
 use Twig\Loader\FilesystemLoader;
+use Twig\TwigFilter;
 
 include_once './vendor/autoload.php';
 
@@ -15,6 +16,11 @@ class View {
             'cache' => false,
             'debug' =>true
         ]);
+        $iconFilter = new TwigFilter('icon', function ($icon, $size = 16, $class = null) {
+            $template = $this->twig->load('composants/icons.tpl');
+            return $template->renderBlock($icon,['size' => $size, 'class' => $class]);
+        }, ['is_safe' => ['html']]);
+        $this->twig->addFilter($iconFilter); // use as {{ 'iconName'|icon(size, 'class') }} on twig
         $this->twig->addExtension(new DebugExtension());
 
         return $this->twig;
