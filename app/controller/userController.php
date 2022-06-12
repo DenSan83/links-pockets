@@ -164,7 +164,7 @@ class UserController extends Controller
         if (!in_array($fileInfo['extension'], $acceptedFormats)) {
             return 'File format not accepted';
         }
-        $uploadDir = 'assets'.DIRECTORY_SEPARATOR.'images'.DIRECTORY_SEPARATOR.'uploads'.DIRECTORY_SEPARATOR.'2' . DIRECTORY_SEPARATOR;
+        $uploadDir = 'assets'.DIRECTORY_SEPARATOR.'images'.DIRECTORY_SEPARATOR.'uploads'.DIRECTORY_SEPARATOR.$_SESSION['user_data']->getId() . DIRECTORY_SEPARATOR;
         if (!is_dir($uploadDir)) {
             if (!mkdir($uploadDir, 077, true)) {
                 return 'Impossible to create necessary folders. Please verify the app rights.';
