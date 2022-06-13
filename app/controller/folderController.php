@@ -26,7 +26,7 @@ class FolderController extends Controller
             // Forbidden chars: #, *, ?, &
             if ($link['org'] === implode('/', $_SESSION['breadcrumb']) . '/#'){
                 $folderList[] = $link;
-            } else if ($link['org'] === implode('/', $_SESSION['breadcrumb'])) {
+            } else if ($link['org'] === implode('/', $_SESSION['breadcrumb']) || $link['org'] === implode('/', $_SESSION['breadcrumb']) . '/') {
                 $linkList[] = $link;
             }
         }
