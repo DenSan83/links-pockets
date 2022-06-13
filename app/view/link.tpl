@@ -2,7 +2,7 @@
     <div id="pocket_{{ link.id }}" class="options-container w-100">
         {% if link.org|last == '#' %} {# This is a folder behavior #}
             <a href="{{ HOST ~ '/folder/' ~ link.url }}" class="d-block">
-                <img src="{{ HOST ~ '/' ~ link.img }}" class="card-img-top folder" alt="{{ link.title }}">
+                <img src="{{ HOST ~ '/assets/images/folder.png' }}" class="card-img-top folder" alt="{{ link.title }}">
             </a>
         {% else %} {# This is a link behavior #}
             <a href="{{ link.url }}" class="d-block" target="_blank">
