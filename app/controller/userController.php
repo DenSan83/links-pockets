@@ -167,7 +167,7 @@ class UserController extends Controller
     private function upload(array $file)
     {
         $fileInfo = pathinfo($file['name']);
-        $acceptedFormats = ['jpg', 'jpeg', 'png', 'gif'];
+        $acceptedFormats = ['jpg', 'jpeg', 'png', 'gif', 'bmp'];
         if (!in_array($fileInfo['extension'], $acceptedFormats)) {
             return 'File format not accepted';
         }
